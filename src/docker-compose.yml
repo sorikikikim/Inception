@@ -1,0 +1,65 @@
+version: "3.5"
+
+services:
+    nginx:
+        depends_on:
+            - wordpress
+        container_name: nginx_debian
+        build: ./nginx
+        image: nginx
+        ports:
+            - 443:443
+        volumes:
+            - wordpress:/var/www/wordpress
+        networks:
+            - intra
+        restart: always
+        init: true
+        #env_file: .env
+
+    mariadb:
+        container_name: mariadb_debian
+        build: ./mariadb
+        volumes:
+            - mariadb:/var/lib/mysql
+        networks:
+            - intra
+        image: mariadb
+        restart: always
+        init: true
+
+    wordpress:
+        depends_on:
+            - mariadb
+        container_name: wordpress_debian
+        build: ./wordpress
+        image: wordpress
+        volumes:
+            - wordpress:/var/www/wordpress
+        networks:
+            - intra
+        restart: always
+        init: true
+
+
+networks:
+    intra:
+        driver: bridge
+
+
+volumes:
+    wordpress:
+        name: wordpress
+        driver: local
+        driver_opts:
+            device: ${VOLPATH}/wordpress
+            o: bind
+            type: volume
+
+    mariadb:
+        name: mariadb
+        driver: local
+        driver_opts:
+            device: ${VOLPATH}/mariadb
+            o: bind
+            type: volume
