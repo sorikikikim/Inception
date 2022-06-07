@@ -7,7 +7,7 @@ server {
 	ssl_certificate /etc/ssl/nginx.crt;
 	ssl_certificate_key /etc/ssl/nginx.key;
 	ssl_protocols TLSv1.2 TLSv1.3;
-	server_name takim.42.fr;
+	server_name sorkim.42.fr;
 	
 
 	index index.php;
