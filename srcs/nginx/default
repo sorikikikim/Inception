@@ -1,6 +1,6 @@
 server {
-    listen 443 ssl default_server;
-	listen [::]:443 ssl default_server;
+    listen 443 ssl;
+	listen [::]:443 ssl;
 
 	# ssl setting
 	ssl on;
